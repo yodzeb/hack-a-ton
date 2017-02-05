@@ -1,0 +1,26 @@
+<div layout-xs="column" layout-gt-xs="row" layout-fill >
+
+  <ng-map zoom="11" >
+    <control name="overviewMap" opened="true" />
+  </ng-map>
+
+  
+</div>
+
+<div class="floatingbox">
+  <div layout="column">
+    <div ng-repeat="(key, target) in $ctrl.targets" >
+      <span flex="50">{{key}}:</span>
+      <span ng-if="target.value.flagged == 1" flex="80">FLAGGED!</span>
+    </div>
+    <div><i>...Scan in progress...</i></div>
+    <div>{{$ctrl.flag}}</div>
+  </div>
+</div>
+
+<div class="floatingbox2">
+  <input type="checkbox"
+	 ng-model="$ctrl.tcp"
+	 ng-change="$ctrl.update()">
+  TCP probing
+</div>
