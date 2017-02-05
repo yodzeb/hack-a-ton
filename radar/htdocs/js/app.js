@@ -1,4 +1,4 @@
-var app = angular.module('game', [  'ngMap' ] )
+var app = angular.module('game', [  'ngMap', 'ngMaterial' ] )
 
     .factory('game', function ($http) {
 	
@@ -65,7 +65,6 @@ var app = angular.module('game', [  'ngMap' ] )
                             ctrl.targets[res[t]["name"]]["value"] = res[t];
 			}
 
-			
 			for (t in ctrl.targets) {
 			    var target = ctrl.targets[t]["value"];
 			    if (ctrl.targets[t]["marker"] == undefined) {
@@ -79,7 +78,7 @@ var app = angular.module('game', [  'ngMap' ] )
 				    fillOpacity: 0.35,
 				    map: map,
 				    center: {lat: parseFloat(target.lat), lng: parseFloat(target.lon)},
-				    radius: 500
+				    radius: 500,
 				});
 				ctrl.targets[t]["marker"] = wpsCircle;
 			    }
@@ -103,6 +102,8 @@ var app = angular.module('game', [  'ngMap' ] )
 		});
 	    }
 
+	    
+
 	    function draw_probes () {
 		NgMap.getMap().then(function(map) {
 
@@ -118,12 +119,14 @@ var app = angular.module('game', [  'ngMap' ] )
 				origin: new google.maps.Point(0,0), // origin
 				anchor: new google.maps.Point(0, 0) // anchor
 			    };
+			    
 			    var marker = new google.maps.Marker({
 				map: map,
 				draggable:false,
 				position: position,
 				icon: image,
-				optimized: false
+				optimized: false,
+				title: probe["ip"]
 			    }); 
 			}
 		    });
@@ -158,9 +161,25 @@ var app = angular.module('game', [  'ngMap' ] )
 			    ctrl.tcp = true;
 			ctrl.position = res2.POSITION;
 			ctrl.flag     = res2.FLAG; // hihi
+			ctrl.updated_targets = res2.TARGET;
 			draw_position();
 		    });
+		    console.log ("update!");
 		});
+	    }
+
+	    ctrl.get_timer = function (target) {
+		console.log (ctrl.updated_targets[target] );
+		if (ctrl.updated_targets === undefined ||
+		    ctrl.updated_targets[target] == 0 ||
+		   ctrl.updated_targets[target] == "0") {
+		    return ("not flagged ;(");
+		}
+		else {
+ 		    var unix = new Date();
+		    unix=unix.getTime() / 1000;
+		    return "Flagged! (for "+(1800-Math.floor ( unix - ctrl.updated_targets[target]))+"s)";
+		}
 	    }
 
 	    ctrl.update = function () {

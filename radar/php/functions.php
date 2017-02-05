@@ -87,21 +87,24 @@ function exec_ping($probes) {
   $count = 0;
   $_SESSION["RESULTS"] = NULL;
 
+  $offset = 0;
+
   foreach ($probes as $p) {
     $ip = $p["ip"];
     if (array_key_exists('PROBING', $_SESSION) &&
 	$_SESSION["PROBING"] === "tcp") {
-      $res = ping_tcp_client($ip, $_SESSION["CLIENT_IP"]);
+      $res = ping_tcp_client($ip, $_SESSION["CLIENT_IP"], $offset);
     }
     else {
       $res = ping_icmp_client($ip, $_SESSION["CLIENT_IP"]);
     }
     $_SESSION["RESULTS"][$count] = $p["lag"] + (int)$res ;
+    $offset++;
     $count++;
   }
 }
 
-function ping_tcp_client ( $ip, $client_ip ) {
+function ping_tcp_client ( $ip, $client_ip, $port_offset ) {
   $average = 0;
   $count   = 0;
 
@@ -110,7 +113,7 @@ function ping_tcp_client ( $ip, $client_ip ) {
     
     $sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
     socket_bind($sock, $ip);
-    $fP = socket_connect($sock, $client_ip, 81);
+    $fP = socket_connect($sock, $client_ip, 81+$port_offset);
     
     $tA = microtime(true); 
 
@@ -127,7 +130,6 @@ function ping_tcp_client ( $ip, $client_ip ) {
     $average = 1;
   }
   return $average;
-
 }
 
 
