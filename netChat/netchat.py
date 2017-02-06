@@ -58,7 +58,7 @@ def poke_me(dport):
     
 
 def open_the_window(dport):
-    print_message ("Open the window in large!")
+    print_message ("Open the window!")
     sport=randint(1024,65535)
     window=IP(dst=client_ip)/TCP(sport=sport,dport=dport)/"Open it to the maximum!"
     resp=sr1(window, verbose=0, timeout=2)
