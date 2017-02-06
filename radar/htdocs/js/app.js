@@ -126,7 +126,7 @@ var app = angular.module('game', [  'ngMap', 'ngMaterial' ] )
 				position: position,
 				icon: image,
 				optimized: false,
-				title: probe["ip"]
+				title: probe["name"]
 			    }); 
 			}
 		    });
@@ -162,14 +162,14 @@ var app = angular.module('game', [  'ngMap', 'ngMaterial' ] )
 			ctrl.position = res2.POSITION;
 			ctrl.flag     = res2.FLAG; // hihi
 			ctrl.updated_targets = res2.TARGET;
+			ctrl.results         = res2.RESULTS;
 			draw_position();
 		    });
-		    console.log ("update!");
 		});
 	    }
 
 	    ctrl.get_timer = function (target) {
-		console.log (ctrl.updated_targets[target] );
+		//console.log (ctrl.updated_targets[target] );
 		if (ctrl.updated_targets === undefined ||
 		    ctrl.updated_targets[target] == 0 ||
 		   ctrl.updated_targets[target] == "0") {

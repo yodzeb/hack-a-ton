@@ -9,6 +9,8 @@ from random import randint
 flag="./flag"
 client_ip=os.environ["SOCAT_PEERADDR"]
 
+
+print >> sys.stderr, client_ip
     
 def failed():
     print_message ("I don't want to talk anymore, you're not funny...")
@@ -27,9 +29,13 @@ def send_flag():
 
 def poke_me(dport):
     rand_port=randint(1024,65535)
-    port1=randint(1024,65535)
-    port2=randint(1024,65535)
-    port3=randint(1024,65535)
+
+    port_start=9100
+    port_end=9200
+
+    port1=randint(port_start,port_end)
+    port2=randint(port_start,port_end)
+    port3=randint(port_start,port_end)
 
     port_arr=[port1, port2, port3]
 
@@ -72,6 +78,7 @@ def ask_urgent(dport):
     urgent=IP(dst=client_ip)/TCP(sport=sport,dport=dport)/"Do you know the Urgent flag?"
     resp=sr1(urgent, verbose=0, timeout=2)
     if (resp):
+        resp.show
         flags=resp[TCP].flags
         urg_flag=flags & int('0b000000100000',2)
         if (urg_flag == 0):

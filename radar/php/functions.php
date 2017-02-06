@@ -65,14 +65,15 @@ function update_position ($probes) {
   
   $LatA  = $probes[0]["lat"];
   $LonA  = $probes[0]["lon"];
-  $DistA = $_SESSION["RESULTS"][0]*$new_max/$max ;
+  $DistA = $_SESSION["RESULTS"][$probes[0]["name"]]*$new_max/$max ;
   $LatB  = $probes[1]["lat"];	   
   $LonB  = $probes[1]["lon"];
-  $DistB = $_SESSION["RESULTS"][1]*$new_max/$max ;
+  $DistB = $_SESSION["RESULTS"][$probes[1]["name"]]*$new_max/$max ;
   $LatC  = $probes[2]["lat"];	   
   $LonC  = $probes[2]["lon"];	   
-  $DistC = $_SESSION["RESULTS"][2]*$new_max/$max ;
+  $DistC = $_SESSION["RESULTS"][$probes[2]["name"]]*$new_max/$max ;
 
+  print ("../bin/position.py $LatA $LonA $DistA $LatB $LonB $DistB $LatC $LonC $DistC");
   exec ("../bin/position.py $LatA $LonA $DistA $LatB $LonB $DistB $LatC $LonC $DistC", $position) ;
 
   if (preg_match ("/([\d\.]+) ([\d\.]+)/", $position[0], $res)) {
@@ -87,33 +88,31 @@ function exec_ping($probes) {
   $count = 0;
   $_SESSION["RESULTS"] = NULL;
 
-  $offset = 0;
-
   foreach ($probes as $p) {
     $ip = $p["ip"];
     if (array_key_exists('PROBING', $_SESSION) &&
 	$_SESSION["PROBING"] === "tcp") {
-      $res = ping_tcp_client($ip, $_SESSION["CLIENT_IP"], $offset);
+      $res = ping_tcp_client($ip, $_SESSION["CLIENT_IP"], $p["tcp"]);
     }
     else {
       $res = ping_icmp_client($ip, $_SESSION["CLIENT_IP"]);
     }
-    $_SESSION["RESULTS"][$count] = $p["lag"] + (int)$res ;
+    $_SESSION["RESULTS"][$p["name"]] = $p["lag"] + (int)$res ;
     $offset++;
     $count++;
   }
 }
 
-function ping_tcp_client ( $ip, $client_ip, $port_offset ) {
+function ping_tcp_client ( $ip, $client_ip, $port ) {
   $average = 0;
   $count   = 0;
 
-  for ($i=0; $i<4; $i++) {
+  for ($i=0; $i<3; $i++) {
     $tB = microtime(true); 
     
     $sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
     socket_bind($sock, $ip);
-    $fP = socket_connect($sock, $client_ip, 81+$port_offset);
+    $fP = socket_connect($sock, $client_ip, $port);
     
     $tA = microtime(true); 
 
@@ -138,8 +137,8 @@ function ping_icmp_client ($source_ip, $destination_ip) {
   $average = 0;
   $count   = 0;
   
-  for ($i=0; $i<4; $i++) {
-    exec ("ping -I $source_ip -c 1 $destination_ip -W 2", $ping_res);
+  for ($i=0; $i<3; $i++) {
+    exec ("ping -I $source_ip -c 1 $destination_ip -W 1", $ping_res);
     foreach ($ping_res as $line) {
       if (preg_match("/time\=([\d\.]+)\s/s", $line, $matches)) {
 	$count++;

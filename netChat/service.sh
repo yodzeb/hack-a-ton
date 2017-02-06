@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PORT=5001
+PORT=9003
 
 iptables -F
 iptables -A OUTPUT -p tcp --destination-port 3000 --tcp-flags RST RST  -j DROP

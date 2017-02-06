@@ -8,12 +8,12 @@
 </div>
 
 <div class="floatingbox">
+  <h4>Targets status:</h4>
   <div layout="column">
     <div ng-repeat="(key, target) in $ctrl.targets" layout="row">
       <div flex="50" >{{key}}:</div>
       <div flex="50" >{{$ctrl.get_timer(key)}}</div>
     </div>
-    <div><i>...Scan in progress...stay on that page!</i></div>
     <div>{{$ctrl.flag}}</div>
   </div>
 </div>
@@ -23,4 +23,18 @@
 	 ng-model="$ctrl.tcp"
 	 ng-change="$ctrl.update()">
   TCP probing
+</div>
+
+
+<div class="floatingbox3" layout="column">
+  <h4>Probes status:</h4>
+  <div layout="column">
+    <div ng-repeat="p in $ctrl.probes" layout="row">
+      <div flex="35">{{p.name}}:</div>
+      <div flex="15">{{$ctrl.results[p.name] - 3000}}ms      </div>
+      <div ng-if="$ctrl.tcp"  flex="50">Probing on TCP/{{p.tcp}}   </div>
+      <div ng-if="!$ctrl.tcp" flex="50">Probing from {{p.ip}}</div>
+    </div>
+  </div>
+  <div><i>...Scan in progress...stay on that page!</i></div>
 </div>

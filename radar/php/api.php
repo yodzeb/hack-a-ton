@@ -14,7 +14,7 @@ $targets = array(
 		       "lon"  => "4.013958",
 		       ),
 		 array(
-		       "name" => "Univ",
+		       "name" => "Université",
 		       "lat"  => "49.239009",
 		       "lon"  => "4.003143",
 		       ),
@@ -27,21 +27,24 @@ $targets = array(
 
 
 $probes     = array(array(
-			  "name"=> "chenay",
+			  "name"=> "Chenay",
 			  "ip"  => "192.168.0.43",
+			  "tcp" => "81",
 			  "lag" => "3000",
 			  "lat" => "49.297255",
 			  "lon" => "3.93023",
 			  ),
 		    array("name" => "Witry-les-Reims",
 			  "ip"   => "192.168.0.44",
-			  "lag"  => "3050",
+			  "tcp"  => "82",
+			  "lag"  => "3040",
 			  "lat"  => "49.291993",
 			  "lon"  => "4.127941",
 			  ),
 		    array(
 			  "name" => "Sermiers",
 			  "ip"  => "192.168.0.45",
+			  "tcp" => "83",
 			  "lag" => "3000",
 			  "lat" => "49.162849",
 			  "lon" => "3.983402",
@@ -87,7 +90,7 @@ elseif ($command === "ping") {
   $unix = $date->getTimestamp();
 
   if (array_key_exists('LAST_PING', $_SESSION) &&
-      ($unix - $_SESSION['LAST_PING']) < 2 ) {
+      ($unix - $_SESSION['LAST_PING']) < 8 ) {
     print "Don't be too aggressive, come back later";
   }
   else {
