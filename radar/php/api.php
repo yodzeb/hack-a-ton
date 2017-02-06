@@ -66,6 +66,7 @@ $probes     = array(array(
 include("functions.php");
 
 $command = $_GET["cmd"];
+$_SESSION["CLIENT_IP"] = $_SERVER['REMOTE_ADDR'];
 
 if ($command === "targets") {
   foreach ($targets as &$t) {
@@ -77,7 +78,6 @@ if ($command === "targets") {
 }
 
 elseif ($command === "update") {
-  $_SESSION["CLIENT_IP"] = $_SERVER['REMOTE_ADDR'];
   print (json_encode ($_SESSION));
 }
 
@@ -96,10 +96,10 @@ elseif ($command === "ping") {
   else {
     $_SESSION['LAST_PING'] = $unix;
     
-    if ($_GET["probe"] === "tcp") {
+    if (array_key_exists('probe', $_GET) && $_GET["probe"] === "tcp") {
       $_SESSION["PROBING"] = "tcp";
     }
-    elseif($_GET["probe"] === "icmp") {
+    elseif(array_key_exists('probe',$_GET) && $_GET["probe"] === "icmp") {
       $_SESSION["PROBING"] = "icmp";
     }
     do_ping($probes, $targets);

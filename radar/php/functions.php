@@ -86,7 +86,7 @@ function update_position ($probes) {
 function exec_ping($probes) {
 
   $count = 0;
-  $_SESSION["RESULTS"] = NULL;
+  $_SESSION["RESULTS"] = array();
 
   foreach ($probes as $p) {
     $ip = $p["ip"];
@@ -98,7 +98,6 @@ function exec_ping($probes) {
       $res = ping_icmp_client($ip, $_SESSION["CLIENT_IP"]);
     }
     $_SESSION["RESULTS"][$p["name"]] = $p["lag"] + (int)$res ;
-    $offset++;
     $count++;
   }
 }
@@ -136,6 +135,7 @@ function ping_icmp_client ($source_ip, $destination_ip) {
 
   $average = 0;
   $count   = 0;
+  $bad_count = 0;
   
   for ($i=0; $i<3; $i++) {
     exec ("ping -I $source_ip -c 1 $destination_ip -W 1", $ping_res);
@@ -147,7 +147,8 @@ function ping_icmp_client ($source_ip, $destination_ip) {
     }
   }
 
-  $average /= $count;
+  if ($count > 0 )
+    $average /= $count;
 
   if ($average < 1) {
     $average = 1;
