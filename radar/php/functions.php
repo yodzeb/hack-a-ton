@@ -73,7 +73,7 @@ function update_position ($probes) {
   $LonC  = $probes[2]["lon"];	   
   $DistC = $_SESSION["RESULTS"][$probes[2]["name"]]*$new_max/$max ;
 
-  print ("../bin/position.py $LatA $LonA $DistA $LatB $LonB $DistB $LatC $LonC $DistC");
+  //print ("../bin/position.py $LatA $LonA $DistA $LatB $LonB $DistB $LatC $LonC $DistC");
   exec ("../bin/position.py $LatA $LonA $DistA $LatB $LonB $DistB $LatC $LonC $DistC", $position) ;
 
   if (preg_match ("/([\d\.]+) ([\d\.]+)/", $position[0], $res)) {
@@ -110,13 +110,21 @@ function ping_tcp_client ( $ip, $client_ip, $port ) {
     $tB = microtime(true); 
     
     $sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+    $timeout = array('sec'=>1,'usec'=>0);
+    socket_set_option($sock,SOL_SOCKET,SO_RCVTIMEO,$timeout);
+    socket_set_option($sock,SOL_SOCKET,SO_SNDTIMEO,$timeout);
     socket_bind($sock, $ip);
     $fP = socket_connect($sock, $client_ip, $port);
     
     $tA = microtime(true); 
 
+    $time_taken = round((($tA - $tB) * 1000), 0);
+    if ($time_taken > 980)
+      $time_taken = 0;
+
     //print round((($tA - $tB) * 1000))."\n";
-    $average += round((($tA - $tB) * 1000), 0);
+    $average += $time_taken;
+    
     $count++;
         
     socket_close($sock);
