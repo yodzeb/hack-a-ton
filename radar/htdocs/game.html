@@ -30,10 +30,10 @@
   <h4>Probes status:</h4>
   <div layout="column">
     <div ng-repeat="p in $ctrl.probes" layout="row">
-      <div flex="35">{{p.name}}:</div>
-      <div flex="15">{{$ctrl.results[p.name] - 3000}}ms      </div>
-      <div ng-if="$ctrl.tcp"  flex="50">Probing on TCP/{{p.tcp}}   </div>
-      <div ng-if="!$ctrl.tcp" flex="50">Probing from {{p.ip}}</div>
+      <div flex="25">{{p.name}}:</div>
+      <div flex="10">{{$ctrl.results[p.name] - 3000}}ms      </div>
+      <div ng-if="$ctrl.tcp"  flex="55">Probing {{$ctrl.source_IP}} on TCP/{{p.tcp}}   </div>
+      <div ng-if="!$ctrl.tcp" flex="55">Probing {{$ctrl.source_IP}} from {{p.ip}}</div>
     </div>
   </div>
   <div><i>...Scan in progress...stay on that page!</i></div>

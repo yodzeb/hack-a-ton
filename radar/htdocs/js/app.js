@@ -163,6 +163,7 @@ var app = angular.module('game', [  'ngMap', 'ngMaterial' ] )
 			ctrl.flag     = res2.FLAG; // hihi
 			ctrl.updated_targets = res2.TARGET;
 			ctrl.results         = res2.RESULTS;
+			ctrl.source_IP       = res2.CLIENT_IP;
 			draw_position();
 		    });
 		});

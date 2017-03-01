@@ -31,9 +31,14 @@ function update_targets ($targets) {
       $_SESSION["TARGET"][$t["name"]] = $unix;
     }
     else {
-      if ($_SESSION["TARGET"][$t["name"]] == NULL ||
-	  ($unix - $_SESSION["TARGET"][$t["name"]]) > 1800) {
-	$_SESSION["TARGET"][$t["name"]] =0;
+      if (array_key_exists($t["name"], $_SESSION["TARGET"])) {
+	if ( $_SESSION["TARGET"][$t["name"]] == NULL ||
+	     ($unix - $_SESSION["TARGET"][$t["name"]]) > 1800) {
+	  $_SESSION["TARGET"][$t["name"]] =0;
+	}
+      }
+      else {
+	  $_SESSION["TARGET"][$t["name"]] =0;
       }
     }
   }
@@ -105,8 +110,9 @@ function exec_ping($probes) {
 function ping_tcp_client ( $ip, $client_ip, $port ) {
   $average = 0;
   $count   = 0;
+  $bad_count = 0;
 
-  for ($i=0; $i<3; $i++) {
+  for ($i=0; $i<3 && $bad_count < 2; $i++) {
     $tB = microtime(true); 
     
     $sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
@@ -119,8 +125,11 @@ function ping_tcp_client ( $ip, $client_ip, $port ) {
     $tA = microtime(true); 
 
     $time_taken = round((($tA - $tB) * 1000), 0);
-    if ($time_taken > 980)
+    if ($time_taken > 980) {
       $time_taken = 0;
+      $bad_count ++;
+    }
+
 
     //print round((($tA - $tB) * 1000))."\n";
     $average += $time_taken;
@@ -145,13 +154,18 @@ function ping_icmp_client ($source_ip, $destination_ip) {
   $count   = 0;
   $bad_count = 0;
   
-  for ($i=0; $i<3; $i++) {
+  for ($i=0; $i<3 && $bad_count<2; $i++) {
+    $found = 0;
     exec ("ping -I $source_ip -c 1 $destination_ip -W 1", $ping_res);
     foreach ($ping_res as $line) {
       if (preg_match("/time\=([\d\.]+)\s/s", $line, $matches)) {
+	$found=1;
 	$count++;
 	$average+=$matches[1];
       }
+    }
+    if (! $found ) {
+      $bad_count ++;
     }
   }
 
