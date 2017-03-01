@@ -1,6 +1,7 @@
 #!/bin/bash
 
-curl http://simplemaps.com/static/data/world-cities/basic/simplemaps-worldcities-basic.csv -O cities.csv
+#rm -f cities.csv
+#curl http://simplemaps.com/static/data/world-cities/basic/simplemaps-worldcities-basic.csv > cities.csv
 
 CMD="sqlite3 base.sql"
     
