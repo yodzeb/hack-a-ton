@@ -1,18 +1,18 @@
-<form action="/login.php" method="POST">
+<!DOCTYPE html>
+<html>
+<head>
+<title>Cert-O-Matic</title>
+<link rel="stylesheet" href="css/app.css">
+<head>
 
-  <div class="container">
-    <label><b>Username</b></label>
-    <input type="text" placeholder="Enter Username" name="username" required>
+<body>
 
-    <label><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" name="password" required>
+<h1> Cert-O-Matic </h1>
+<h2> The One-Click CA</h2>
 
-  </div>
+<div class="all">
 
-  <div class="container" style="background-color:#f1f1f1">
-    <button type="submit" >Login</button>
-  </div>
-</form>
+<div class="box">
 
 <?php
 
@@ -31,11 +31,38 @@
        if (($results instanceof Sqlite3Result)) {
 	 $arr = $results->fetchArray();
 	 if ($arr['id'] == 1) {
-	   echo file_get_contents("../flag.txt");
+	   echo "I think you deserve your certification:<br><br><b>";
+	   echo file_get_contents("../flag.txt")."</b>";
+	 }
+	 else {
+	   echo "You're not admin";
 	 }
        }
        else {
-	 echo "no res";
+	 echo "<i>Invalid username or password</i>";
        }
    }
+   else {
 ?>
+   <form action="/login.php" method="POST">
+   
+   <div >
+   <label><b>Username</b></label>
+   </div><div>
+   <input type="text" placeholder="Enter Username" name="username" required>
+   </div><div>
+   <label><b>Password</b></label>
+   </div><div>
+   <input type="password" placeholder="Enter Password" name="password" required>   
+   </div>
+    <button type="submit" >Login</button>
+   </form>
+
+<?php
+   }
+?>
+
+
+</div>
+</body>
+</html>
