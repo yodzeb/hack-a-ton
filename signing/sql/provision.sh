@@ -6,9 +6,10 @@ curl https://raw.githubusercontent.com/datasets/country-list/master/data.csv > c
 
 CMD="sqlite3 base.sql"
     
-    echo "DROP TABLE cities;"    | $CMD
-    echo "DROP TABLE users;"     | $CMD
-    echo "DROP TABLE countries;" | $CMD
-    echo ".import cities.csv cities"     | $CMD -cmd ".mode csv"
-    echo ".import countries.csv  countries"  | $CMD -cmd ".mode csv"
-    echo ".import users.csv  users"      | $CMD -cmd ".mode csv"
+    echo "DROP TABLE users;"       | $CMD
+    echo "DROP TABLE zzcities;"    | $CMD
+    echo "DROP TABLE zzcountries;" | $CMD
+
+    echo ".import countries.csv  zzcountries"  | $CMD -cmd ".mode csv"
+    echo ".import cities.csv zzcities"         | $CMD -cmd ".mode csv"
+    echo ".import users.csv  users"            | $CMD -cmd ".mode csv"

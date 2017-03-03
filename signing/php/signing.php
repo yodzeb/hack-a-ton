@@ -11,7 +11,7 @@
 <h2> The One-Click CA</h2>
 
 <div class="login_link">
-   <a href="login.php">Administration</a>
+   <a href="login.php">Login</a>
 </div>
 <div class="all">
 
@@ -22,7 +22,7 @@ $db = new SQLite3('../sql/base.sql', SQLITE3_OPEN_READONLY);
 function print_city ($db, $city) {
 
   
-  $sql_req = "SELECT city,lat,lng FROM cities WHERE city='$city';";
+  $sql_req = "SELECT city,lat,lng FROM zzcities WHERE city='$city';";
    $results = $db->query($sql_req);
   if (!$results) {
     echo  "(<i>$city not found in BD </i>(Error: <i>".$db->lastErrorMsg()."</i>)";
@@ -30,8 +30,8 @@ function print_city ($db, $city) {
   elseif (($results instanceof Sqlite3Result)) {
     $arr = $results->fetchArray();
 	  
-    echo '<a href=https://www.google.com/maps?hl=en&q='.$arr["lat"].'+'.$arr["lng"].'  target="_blank">';
-    echo $arr["city"];
+    echo '<a href="https://www.google.com/maps?z=10&hl=en&q='.$arr["lat"].'+'.$arr["lng"].'"  target="_blank">';
+    echo $city;
     echo '</a>';    
     
   }
@@ -42,7 +42,7 @@ function print_city ($db, $city) {
 }
 
 function print_country ($db, $country) {
-  $sql_req = "SELECT name from countries WHERE code='$country'";
+  $sql_req = "SELECT name from zzcountries WHERE code='$country'";
   $results = $db->query($sql_req);
 
   if (!$results) {
@@ -50,7 +50,7 @@ function print_country ($db, $country) {
   }
   elseif (($results instanceof Sqlite3Result)) {
     $arr = $results->fetchArray();
-    echo '<a href="https://fr.wikipedia.org/wiki/'.$arr["Name"].'" target="_blank">'.$arr["Name"].'</a>';
+    echo '<a href="https://en.wikipedia.org/wiki/'.$arr["Name"].'" target="_blank">'.$arr["Name"].'</a>';
   }
   else {
     echo "<i> Unknown error</i>";

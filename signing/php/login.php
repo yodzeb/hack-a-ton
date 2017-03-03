@@ -8,7 +8,11 @@
 <body>
 
 <h1> Cert-O-Matic </h1>
-<h2> The One-Click CA</h2>
+<h2> Restricted access.</h2>
+
+<div class="login_link">
+   <a href="signing.php">Cert-O-Matic</a>
+</div>
 
 <div class="all">
 
@@ -30,16 +34,20 @@
        
        if (($results instanceof Sqlite3Result)) {
 	 $arr = $results->fetchArray();
-	 if ($arr['id'] == 1) {
-	   echo "I think you deserve your certification:<br><br><b>";
-	   echo file_get_contents("../flag.txt")."</b>";
+
+	 if ($arr) {
+	   if ($arr['id'] == 1) {
+	     echo "I think you deserve your certification:<br><br><b>";
+	     echo file_get_contents("../flag.txt")."</b>";
+	   }
+	   else {
+	     echo "You're not admin";
+	   }
 	 }
+
 	 else {
-	   echo "You're not admin";
+	   echo "<i>Invalid username or password</i>";
 	 }
-       }
-       else {
-	 echo "<i>Invalid username or password</i>";
        }
    }
    else {
