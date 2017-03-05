@@ -1,6 +1,58 @@
 
+.login_link {
+    align:right;
+    position: fixed !important;
+    right: 1px;
+    top: 1px;
+}
+
+.fix {
+    width: 100vw;
+    height: 100vh;
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -9999;
+
+}
+
+.bandeau {
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+    top: 100px;
+    left: -70px;
+    width: 400px;
+
+    font-family: Impact, Charcoal, sans-serif;
+    color: #333333;
+
+    -webkit-transform: rotate(-45deg); 
+    -moz-transform: rotate(-45deg);  
+    background-color: #f44242;
+    position: absolute;
+
+    text-align:center;
+    font-size:30px;
+
+
+    //opacity: 1;
+    //transition: 1s opacity;
+}
+
+.fadein {
+    
+}
+
+.title {
+
+}
+
 body {
     background-color: #c4daff;
+
+    font-family: Impact, Charcoal, sans-serif;
+    color: #333333;
+
 }
 
 h1 {
@@ -26,6 +78,7 @@ h3 {
     top:25%;
     height:50%;
     width:50%;
+    margin-bottom: 50px;
 }
 
 li {
@@ -33,23 +86,16 @@ li {
     text-align: left:
 }
 
-.login_link {
-    align:right;
-    position: absolute;
-    right: 1px;
-    top: 1px;
-}
-
 .info {
     text-align: left;
 }
 
 .box {
-    border-style: dashed;
+    //border-style: dashed;
     width: 100%;
     //left: 25%;    
     top-margin: 30px;
-
+    margin-bottom: 50px;
     text-align: center;
 
     -webkit-box-shadow: 3px 3px 5px 6px #ccc;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */

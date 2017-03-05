@@ -5,15 +5,25 @@
 <link rel="stylesheet" href="css/app.css">
 <head>
 
-<body>
+<body style=margin:0 onload="for(s=window.screen,w=q.width=s.width,h=q.height=s.height,m=Math.random,p=[],i=0;i<256;p[i++]=1);setInterval('9Style=\'rgba(0,0,0,.05)\'9Rect(0,0,w,h)9Style=\'#0F0\';p.map(function(v,i){9Text(String.fromCharCode(33+m()*80),i*10,v);p[i]=v>758+m()*1e4?0:v+10})'.split(9).join(';q.getContext(\'2d\').fill'),60)">
 
-<h1> Cert-O-Matic </h1>
-<h2> The One-Click CA</h2>
+<canvas class="fix" id=q ></canvas>
 
 <div class="login_link">
-   <a href="login.php">Login</a>
+   <a href="login.php"><img src="images/safe.png" height="30px"></a>
 </div>
+
+
+<div class="bandeau">
+   <div></div>
+</div>
+
 <div class="all">
+
+<div class="title">
+<h1> Cert-O-Matic </h1>
+<h2> The One-Click CA</h2>
+</div>
 
 <?php
 

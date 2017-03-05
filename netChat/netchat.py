@@ -13,7 +13,7 @@ client_ip=os.environ["SOCAT_PEERADDR"]
 print >> sys.stderr, client_ip
     
 def failed():
-    print_message ("I don't want to talk anymore, you're not funny...")
+    print_message ("You're not one of us!")
     sys.exit(0);
 
 def print_message(msg):
@@ -21,7 +21,7 @@ def print_message(msg):
     sys.stdout.flush()
 
 def send_flag():
-    print_message ("Thank you for chatting...")
+    print_message ("Welcome back, brother...")
     with open (flag) as f:
         print f.readlines()[0];
     sys.exit(0);
