@@ -90,7 +90,7 @@ if(isset($_POST["submit"])) {
   foreach (["serialNumber","validFrom", "validTo"] as $k) {
     echo "<li><b>$k: </b>";
     if (preg_match ("/valid/", $k)) {
-      echo gmdate("Y-m-d H:i:s",$cert_data[$k]/1000);
+      echo date_create_from_format('ymdHis\Z',$cert_data[$k])->format("c");
 
     }
     else {
@@ -133,6 +133,11 @@ if(isset($_POST["submit"])) {
   echo "<pre>";
   echo $certout;
   echo "</pre>";
+
+  echo "<h4>Our root CA:</h4>";
+  echo "<pre>";
+  echo $cacert;
+  echo "</pre>";
   echo "</div>";
 }
 else {
@@ -142,7 +147,7 @@ else {
    <h3>Upload your CSR here:</h3>
    <div class="upload">
    <input type="file" name="toupload" id="toupload">
-   <input type="submit" value="Upload now!" name="submit">
+   <input type="submit" value="Sign!" name="submit">
    </form>
    </div>
 </div>

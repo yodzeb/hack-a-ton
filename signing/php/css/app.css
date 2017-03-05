@@ -51,7 +51,7 @@ body {
     background-color: #c4daff;
 
     font-family: Impact, Charcoal, sans-serif;
-    color: #333333;
+
 
 }
 
@@ -73,9 +73,10 @@ h3 {
 }
 
 .all {
+    color: #888888;
     position: absolute;
     left: 25%;
-    top:25%;
+    top:15%;
     height:50%;
     width:50%;
     margin-bottom: 50px;

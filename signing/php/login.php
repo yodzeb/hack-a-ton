@@ -5,10 +5,9 @@
 <link rel="stylesheet" href="css/app.css">
 <head>
 
-<body style=margin:0 onload="for(s=window.screen,w=q.width=s.width,h=q.height=s.height,m=Math.random,p=[],i=0;i<256;p[i++]=1);setInterval('9Style=\'rgba(0,0,0,.05)\'9Rect(0,0,w,h)9Style=\'#0F0\';p.map(function(v,i){9Text(String.fromCharCode(33+m()*80),i*10,v);p[i]=v>758+m()*1e4?0:v+10})'.split(9).join(';q.getContext(\'2d\').fill'),33)">
+<body style=margin:0 onload="for(s=window.screen,w=q.width=s.width,h=q.height=s.height,m=Math.random,p=[],i=0;i<256;p[i++]=1);setInterval('9Style=\'rgba(0,0,0,.05)\'9Rect(0,0,w,h)9Style=\'#0F0\';p.map(function(v,i){9Text(String.fromCharCode(33+m()*80),i*10,v);p[i]=v>758+m()*1e4?0:v+10})'.split(9).join(';q.getContext(\'2d\').fill'),60)">
 
-<canvas id=q></canvas>
-
+<canvas class="fix" id=q ></canvas>
 
 <div class="login_link">
    <a href="signing.php"><img src="images/key.png" height="30px"></a>
@@ -66,11 +65,11 @@
    <div >
    <label><b>Username</b></label>
    </div><div>
-   <input type="text" placeholder="Enter Username" name="username" required>
+   <input type="text" name="username" required>
    </div><div>
    <label><b>Password</b></label>
    </div><div>
-   <input type="password" placeholder="Enter Password" name="password" required>   
+   <input type="password" name="password" required>   
    </div>
     <button type="submit" >Login</button>
    </form>
